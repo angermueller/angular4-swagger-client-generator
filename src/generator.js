@@ -172,6 +172,17 @@ var Generator = (function () {
                 }
 
                 params = params.concat(globalParams);
+                params.sort(function(a, b) {
+                    var value = -(a.required - b.required);
+                    if(value === 0) {
+                        if(a.name === 'id')
+                            value = -1;
+                        else if(b.name === 'id')
+                            value = 1;
+                    }
+                    return value;
+                });
+                // params.reverse();
 
                 // Index file!
                 _.forEach(params, function (parameter) {
