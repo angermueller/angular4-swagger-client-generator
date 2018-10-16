@@ -214,6 +214,19 @@ var Generator = (function () {
                         } else {
                             parameter.typescriptType = that.getTypescriptType(parameter.type);
                         }
+                    }
+                    // lets also check for a bunch of Java objects!
+                    if (parameter.type === 'integer' || parameter.type === 'double' || parameter.type == 'Integer') {
+                        parameter.typescriptType = 'number';
+                    } else if (parameter.type == 'String') {
+                        parameter.typescriptType = 'string';
+                    } else if (parameter.type == 'Boolean') {
+                        parameter.typescriptType = 'boolean';
+                    } else if (parameter.type === 'object') {
+                        parameter.typescriptType = 'any';
+                    } else if (parameter.type === 'array') {
+                        parameter.typescriptType = that.camelCase(parameter.items['type']) +'[]';
+                        parameter.isArray = true;
                     } else {
                         parameter.typescriptType = that.getTypescriptType(parameter.type);
                     }
